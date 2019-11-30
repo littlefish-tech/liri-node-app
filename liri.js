@@ -32,11 +32,11 @@ console.log(queryUrl);
 axios.get(queryUrl).then(
   function(response) {
       for (i = 0; i < response.data.length; i++){
-    console.log("Name of the Venue " + response.data[i].venue.name);
+    console.log("Name of the Venue: " + response.data[i].venue.name);
     console.log("Venue location: " + response.data[i].venue.city);
-    console.log("Venue location: " + response.data[i].datetime);
+    console.log("Date of the Event: " + response.data[i].datetime);
       }
-    console.log(response.data);
+    //console.log(response.data);
   })
   .catch(function(error) {
     if (error.response) {
