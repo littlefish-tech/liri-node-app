@@ -3,15 +3,37 @@ var Spotify = require("./keys.js");
 //var spotify = new Spotify(spotify.id,spotify.secret);
 
 var axios = require("axios");
-
 var nodeArgs = process.argv;
+var action = process.argv[2];
+var value = process.argv[3];
+
+switch (action) {
+  case "concert":
+    concert();
+    break;
+
+    case "spotify":
+      spotify();
+      break;
+
+    case "movie":
+      movie();
+      break;
+
+    case "others":
+      other();
+      break;
+}
+
 // Grab the movieName which will always be the third node argument.
+function concert() {
+
 var artist = "";
-for (var i = 2; i < nodeArgs.length; i++) {
-    if (i > 2 && i < nodeArgs.length) {
-        artist = artist + "+" + nodeArgs[i];
+for (var i = 3; i < nodeArgs.length; i++) {
+    if (i > 3 && i < nodeArgs.length) {
+      artist = artist + "+" + nodeArgs[i];
     } else {
-        artist += nodeArgs[i];
+      artist += nodeArgs[i];
     }
 }
 //var artist  = process.argv[2];
@@ -51,13 +73,16 @@ axios.get(queryUrl).then(
     }
     console.log(error.config);
   });
+}
 
-  var movie = "";
-for (var i = 2; i < nodeArgs.length; i++) {
-    if (i > 2 && i < nodeArgs.length) {
-        movie = movie + "+" + nodeArgs[i];
+function movie(){
+
+var movie = "";
+for (var i = 3; i < nodeArgs.length; i++) {
+    if (i > 3 && i < nodeArgs.length) {
+      movie = movie + "+" + nodeArgs[i];
     } else {
-        movie += nodeArgs[i];
+      movie += nodeArgs[i];
     }
 }
 
@@ -76,7 +101,11 @@ for (var i = 2; i < nodeArgs.length; i++) {
       //console.log(response);
     }
   );
+  }
 
+  function others() {
+
+  
   var fs = require("fs");
 
 // This block of code will read from the "movies.txt" file.
@@ -99,3 +128,4 @@ fs.readFile("random.txt", "utf8", function(error, data) {
   console.log(dataArr);
 
 });
+  }
