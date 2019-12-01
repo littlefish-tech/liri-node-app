@@ -1,6 +1,7 @@
 require("dotenv").config();
-var Spotify = require("./keys.js");
-var spotify = new Spotify();
+var Spotify = require('node-spotify-api');
+var keys = require("./keys.js");
+var spotify = new Spotify(keys.spotify);
 
 var axios = require("axios");
 var nodeArgs = process.argv;
@@ -12,8 +13,8 @@ switch (action) {
     concert();
     break;
 
-    case "spotify":
-      spotify();
+    case "spotifySong":
+      spotifySong();
       break;
 
     case "movie":
@@ -21,7 +22,7 @@ switch (action) {
       break;
 
     case "others":
-      other();
+      others();
       break;
 }
 
@@ -131,7 +132,8 @@ fs.readFile("random.txt", "utf8", function(error, data) {
   }
 
 
-  function spotify() {
+  function spotifySong() {
+  
   var song = "";
 for (var i = 3; i < nodeArgs.length; i++) {
     if (i > 3 && i < nodeArgs.length) {
@@ -140,20 +142,27 @@ for (var i = 3; i < nodeArgs.length; i++) {
       song += nodeArgs[i];
     }
 }
-  const result = dotenv.config()
+//   const result = dotenv.config()
  
-if (result.error) {
-  throw result.error
-}
+// if (result.error) {
+//   throw result.error
+// }
  
-console.log(result.parsed)
+// console.log(result.parsed)
 
-spotify.search({ type: song,
-   query: 'Artist', "The song's name: ", "preview link", "Album"}, function(err, data) {
+spotify.search({ type: "track", query: 'song'}, function(err, data) {
     if (err) {
       return console.log('Error occurred: ' + err);
     }
-   
-  console.log(data); 
+    var songInfo = data.tracks.items
+    for (i = 0; i < songInfo.length; i++){
+    
+  //console.log(songInfo[i]); 
+  
+  console.log("Artist(s): " + songInfo[i].album.artists);
+  console.log("The song's name: " + song)
+  console.log("A preview link of the song from Spotify: " + songInfo[i].album.href)
+  console.log("The album that the song is from: " + songInfo[i].album.name)
+    }
   });
 }
