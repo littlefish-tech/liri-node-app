@@ -1,11 +1,12 @@
 require("dotenv").config();
 var Spotify = require('node-spotify-api');
 var keys = require("./keys.js");
-
+var spotify = new Spotify(keys.spotify);
 var axios = require("axios");
 var nodeArgs = process.argv;
 var action = process.argv[2];
 var value = process.argv[3];
+
 
 switch (action) {
   case "concert-this":
@@ -17,7 +18,7 @@ switch (action) {
       break;
 
     case "movie-this":
-      movie();
+      movieShow();
       break;
 
     case "do-what-it-says":
@@ -25,21 +26,22 @@ switch (action) {
       break;
 }
 
+
 // Grab the movieName which will always be the third node argument.
 function concert() {
 
-var artist = "";
+var value = "";
 for (var i = 3; i < nodeArgs.length; i++) {
     if (i > 3 && i < nodeArgs.length) {
-      artist = artist + "+" + nodeArgs[i];
+      value = value + "+" + nodeArgs[i];
     } else {
-      artist += nodeArgs[i];
+      value += nodeArgs[i];
     }
 }
 //var artist  = process.argv[2];
 
 // Then run a request with axios to the OMDB API with the movie specified
-var queryUrl = "https://rest.bandsintown.com/artists/" + artist + "/events?app_id=codingbootcamp";
+var queryUrl = "https://rest.bandsintown.com/artists/" + value + "/events?app_id=codingbootcamp";
 
 // This line is just to help us debug against the actual URL.
 console.log(queryUrl);
@@ -76,30 +78,30 @@ axios.get(queryUrl).then(
   });
 }
 
-function movie(){
+function movieShow(){
 
-let movie = "Mr. Nobody";
+let value = "Mr. Nobody";
 
 
 for (var i = 3; i < nodeArgs.length; i++) {
   if (i > 3 && i < nodeArgs.length) {
-      movie = "" + "+" + nodeArgs[i];
+    value = "" + "+" + nodeArgs[i];
   }else {
-      movie = "" + nodeArgs[i];
+    value = "" + nodeArgs[i];
     }
     
 }
 
 
   // We then run the request with axios module on a URL with a JSON
-  axios.get("http://www.omdbapi.com/?t=" + movie + "&y=&plot=short&apikey=trilogy").then(
+  axios.get("http://www.omdbapi.com/?t=" + value + "&y=&plot=short&apikey=trilogy").then(
     function(response) {
       // Then we print out the imdbRating
       console.log("********************START FROM HERE***************************" + "\n")
       console.log("Title of the movie: " + response.data.Title + "\n");
       console.log("Year the movie came out: " + response.data.Year + "\n");
       console.log("IMDB Rating of the movie: " + response.data.imdbRating + "\n");
-      //console.log("Rotten Tomatoes Rating of the movie: " + response.data.Country);
+      //console.log("Rotten Tomatoes Rating of the movie: " + response.data.Ratings[1].value);
       console.log("Country where the movie was produced: " + response.data.Country + "\n");
       console.log("Language of the movie: " + response.data.Language + "\n");
       console.log("Plot of the movie: " + response.data.Plot + "\n");
@@ -132,21 +134,52 @@ fs.readFile("random.txt", "utf8", function(error, data) {
 
   // We will then re-display the content as an array for later use.
   console.log(dataArr);
+  //console.log(randomData);
+
+  action = dataArr[0];
+  value = process.argv[3] = dataArr[1].split("").slice(1,-1).join('');
+//   console.log(value);
+//   for (var i = 3; i < nodeArgs.length; i++) {
+//     if (i > 3 && i < nodeArgs.length) {
+//       value = value + "+" + nodeArgs[i];
+//     } else {
+//       value += nodeArgs[i];
+//     }
+// }
+
+  switch (action) {
+    case "concert-this":
+      concert();
+      break;
+  
+      case "spotify-this-song":
+        spotifySong();
+        break;
+  
+      case "movie-this":
+        movieShow();
+        break;
+  
+      case "do-what-it-says":
+        others();
+        break;
+  }
 
 });
+
   }
 
 
   function spotifySong() {
   
-  var spotify = new Spotify(keys.spotify);
+  
 
-  var song = "";
+  var value = "";
 for (var i = 3; i < nodeArgs.length; i++) {
     if (i > 3 && i < nodeArgs.length) {
-      song = song + "+" + nodeArgs[i];
+      value = value + "+" + nodeArgs[i];
     } else {
-      song += nodeArgs[i];
+      value += nodeArgs[i];
     }
 }
 var songName = nodeArgs.slice(3).join(' ');
@@ -159,7 +192,8 @@ var songName = nodeArgs.slice(3).join(' ');
  
 // console.log(result.parsed)
 
-spotify.search({ type: "track", query: song}, function(err, data) {
+spotify.search({ type: "track", query: value}, function(err, data) {
+  //console.log(value);
     if (err) {
       return console.log('Error occurred: ' + err);
     }
