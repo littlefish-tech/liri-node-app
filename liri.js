@@ -1,7 +1,6 @@
 require("dotenv").config();
 var Spotify = require('node-spotify-api');
 var keys = require("./keys.js");
-var spotify = new Spotify(keys.spotify);
 
 var axios = require("axios");
 var nodeArgs = process.argv;
@@ -9,19 +8,19 @@ var action = process.argv[2];
 var value = process.argv[3];
 
 switch (action) {
-  case "concert":
+  case "concert-this":
     concert();
     break;
 
-    case "spotifySong":
+    case "spotify-this-song":
       spotifySong();
       break;
 
-    case "movie":
+    case "movie-this":
       movie();
       break;
 
-    case "others":
+    case "do-what-it-says":
       others();
       break;
 }
@@ -48,6 +47,7 @@ console.log(queryUrl);
 axios.get(queryUrl).then(
   function(response) {
       for (i = 0; i < response.data.length; i++){
+    console.log("********************START FROM HERE***************************")
     console.log("Name of the Venue: " + response.data[i].venue.name);
     console.log("Venue location: " + response.data[i].venue.city);
     console.log("Date of the Event: " + response.data[i].datetime);
@@ -91,10 +91,11 @@ for (var i = 3; i < nodeArgs.length; i++) {
   axios.get("http://www.omdbapi.com/?t=" + movie + "&y=&plot=short&apikey=trilogy").then(
     function(response) {
       // Then we print out the imdbRating
+      console.log("********************START FROM HERE***************************")
       console.log("Title of the movie: " + response.data.Title);
       console.log("Year the movie came out: " + response.data.Year);
       console.log("IMDB Rating of the movie: " + response.data.imdbRating);
-      console.log("Rotten Tomatoes Rating of the movie: " + response.data.Country);
+      //console.log("Rotten Tomatoes Rating of the movie: " + response.data.Country);
       console.log("Country where the movie was produced: " + response.data.Country);
       console.log("Language of the movie: " + response.data.Language);
       console.log("Plot of the movie: " + response.data.Plot);
@@ -134,6 +135,8 @@ fs.readFile("random.txt", "utf8", function(error, data) {
 
   function spotifySong() {
   
+  var spotify = new Spotify(keys.spotify);
+
   var song = "";
 for (var i = 3; i < nodeArgs.length; i++) {
     if (i > 3 && i < nodeArgs.length) {
@@ -142,6 +145,8 @@ for (var i = 3; i < nodeArgs.length; i++) {
       song += nodeArgs[i];
     }
 }
+var songName = nodeArgs.slice(3).join(' ');
+
 //   const result = dotenv.config()
  
 // if (result.error) {
@@ -150,19 +155,24 @@ for (var i = 3; i < nodeArgs.length; i++) {
  
 // console.log(result.parsed)
 
-spotify.search({ type: "track", query: 'song'}, function(err, data) {
+spotify.search({ type: "track", query: song}, function(err, data) {
     if (err) {
       return console.log('Error occurred: ' + err);
     }
-    var songInfo = data.tracks.items
-    for (i = 0; i < songInfo.length; i++){
+   //console.log(data.tracks.items);
+  var songInfo = data.tracks.items
+  for (i = 0; i < songInfo.length; i++){
     
   //console.log(songInfo[i]); 
+
+  console.log("********************START FROM HERE***************************")
+  console.log("Artist(s): " + songInfo[i].artists[0].name);
   
-  console.log("Artist(s): " + songInfo[i].album.artists);
-  console.log("The song's name: " + song)
-  console.log("A preview link of the song from Spotify: " + songInfo[i].album.href)
+  console.log("The song's name: " + songName)
+  console.log("A preview link of the song from Spotify: " + songInfo[i].preview_url)
   console.log("The album that the song is from: " + songInfo[i].album.name)
-    }
-  });
-}
+  //console.log("********************END FROM HERE***************************")
+}  
+} 
+  // });
+)}
