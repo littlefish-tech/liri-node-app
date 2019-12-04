@@ -47,10 +47,10 @@ console.log(queryUrl);
 axios.get(queryUrl).then(
   function(response) {
       for (i = 0; i < response.data.length; i++){
-    console.log("********************START FROM HERE***************************")
-    console.log("Name of the Venue: " + response.data[i].venue.name);
-    console.log("Venue location: " + response.data[i].venue.city);
-    console.log("Date of the Event: " + response.data[i].datetime);
+    console.log("********************START FROM HERE***************************" + "\n")
+    console.log("Name of the Venue: " + response.data[i].venue.name + "\n");
+    console.log("Venue location: " + response.data[i].venue.city + "\n");
+    console.log("Date of the Event: " + response.data[i].datetime + "\n");
       }
     //console.log(response.data);
   })
@@ -78,28 +78,32 @@ axios.get(queryUrl).then(
 
 function movie(){
 
-var movie = "";
+let movie = "Mr. Nobody";
+
+
 for (var i = 3; i < nodeArgs.length; i++) {
-    if (i > 3 && i < nodeArgs.length) {
-      movie = movie + "+" + nodeArgs[i];
-    } else {
-      movie += nodeArgs[i];
+  if (i > 3 && i < nodeArgs.length) {
+      movie = "" + "+" + nodeArgs[i];
+  }else {
+      movie = "" + nodeArgs[i];
     }
+    
 }
+
 
   // We then run the request with axios module on a URL with a JSON
   axios.get("http://www.omdbapi.com/?t=" + movie + "&y=&plot=short&apikey=trilogy").then(
     function(response) {
       // Then we print out the imdbRating
-      console.log("********************START FROM HERE***************************")
-      console.log("Title of the movie: " + response.data.Title);
-      console.log("Year the movie came out: " + response.data.Year);
-      console.log("IMDB Rating of the movie: " + response.data.imdbRating);
+      console.log("********************START FROM HERE***************************" + "\n")
+      console.log("Title of the movie: " + response.data.Title + "\n");
+      console.log("Year the movie came out: " + response.data.Year + "\n");
+      console.log("IMDB Rating of the movie: " + response.data.imdbRating + "\n");
       //console.log("Rotten Tomatoes Rating of the movie: " + response.data.Country);
-      console.log("Country where the movie was produced: " + response.data.Country);
-      console.log("Language of the movie: " + response.data.Language);
-      console.log("Plot of the movie: " + response.data.Plot);
-      console.log("Actors in the movie: " + response.data.Actors);
+      console.log("Country where the movie was produced: " + response.data.Country + "\n");
+      console.log("Language of the movie: " + response.data.Language + "\n");
+      console.log("Plot of the movie: " + response.data.Plot + "\n");
+      console.log("Actors in the movie: " + response.data.Actors + "\n");
       //console.log(response);
     }
   );
@@ -165,12 +169,12 @@ spotify.search({ type: "track", query: song}, function(err, data) {
     
   //console.log(songInfo[i]); 
 
-  console.log("********************START FROM HERE***************************")
-  console.log("Artist(s): " + songInfo[i].artists[0].name);
+  console.log("********************START FROM HERE***************************" + "\n")
+  console.log("Artist(s): " + songInfo[i].artists[0].name + "\n");
   
-  console.log("The song's name: " + songName)
-  console.log("A preview link of the song from Spotify: " + songInfo[i].preview_url)
-  console.log("The album that the song is from: " + songInfo[i].album.name)
+  console.log("The song's name: " + songName + "\n")
+  console.log("A preview link of the song from Spotify: " + songInfo[i].preview_url + "\n")
+  console.log("The album that the song is from: " + songInfo[i].album.name + "\n")
   //console.log("********************END FROM HERE***************************")
 }  
 } 
