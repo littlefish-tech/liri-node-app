@@ -194,6 +194,12 @@ fs.readFile("random.txt", "utf8", function(error, data) {
 
 ```
 
+### Technologies I use in this project:
+- Javascript
+- Node.js
+
+
+
 ## below are some gifs about how the information is showing in the Terminal
 
 ### Concer-this
