@@ -101,7 +101,7 @@ for (var i = 3; i < nodeArgs.length; i++) {
       console.log("Title of the movie: " + response.data.Title + "\n");
       console.log("Year the movie came out: " + response.data.Year + "\n");
       console.log("IMDB Rating of the movie: " + response.data.imdbRating + "\n");
-      //console.log("Rotten Tomatoes Rating of the movie: " + response.data.Ratings[1].value);
+      console.log("Rotten Tomatoes Rating of the movie: " + JSON.stringify(response.data.Ratings[1].Value) + "\n");
       console.log("Country where the movie was produced: " + response.data.Country + "\n");
       console.log("Language of the movie: " + response.data.Language + "\n");
       console.log("Plot of the movie: " + response.data.Plot + "\n");
