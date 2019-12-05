@@ -103,7 +103,7 @@ spotify.search({ type: "track", query: value}, function(err, data) {
 )}
 
 ```
-- MOvie-this is a very fun part, and we can search a movie's detail information by typing the command and the movie's name. If the user not type anything, then it will show the default movie detail "Mr, Nobody" in the terminal.
+- Movie-this is a very fun part, and we can search a movie's detail information by typing the command and the movie's name. If the user not type anything, then it will show the default movie detail "Mr, Nobody" in the terminal.
 
 ``` javascript
 
